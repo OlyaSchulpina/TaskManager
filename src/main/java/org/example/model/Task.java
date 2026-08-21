@@ -1,7 +1,7 @@
 package org.example.model;
 
 public class Task {
-    private long id;
+    private int id;
     private String title;
     private String description;
     private boolean completed;
@@ -23,7 +23,7 @@ public class Task {
     }
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
