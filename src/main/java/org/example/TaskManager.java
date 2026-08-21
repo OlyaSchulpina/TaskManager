@@ -6,6 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TaskManager {
+    private static TaskManager instance;
+
+    public static TaskManager getInstance() {
+        if (instance==null){
+            instance = new TaskManager();
+        }
+        return instance;
+    }
+
     Map<Integer, Task> tasks = new HashMap<>();
 
     public void addTask(Task task){
@@ -34,5 +43,9 @@ public class TaskManager {
                 System.out.println(task.getTitle());
             }
         }
+    }
+    public void complete(int id){
+        Task task = tasks.get(id);
+        task.setCompleted(true);
     }
 }

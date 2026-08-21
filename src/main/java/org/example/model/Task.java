@@ -6,7 +6,14 @@ public class Task {
     private String description;
     private boolean completed;
 
-    public void setId(long id){
+    public Task(int id, String title, String description, boolean completed){
+        this.id = id;
+        this.title = title;
+        this.completed = completed;
+        this.description = description;
+    }
+
+    public void setId(int id){
         this.id = id;
     }
 
