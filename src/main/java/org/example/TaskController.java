@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.exception.InvalidTaskException;
+import org.example.exception.TaskNotFoundException;
 import org.example.model.Task;
 
 import java.util.Scanner;
@@ -33,7 +35,11 @@ public class TaskController {
                     System.out.println("Введите описание задачи");
                     String description = scanner.nextLine();
                     Task task = new Task(id,title,description,false);
-                    taskManager.addTask(task);
+                    try{
+                        taskManager.addTask(task);
+                    }catch (InvalidTaskException e){
+                        System.err.println(e.getMessage());
+                    }
                     System.out.println("Добавлена новая задача: "+task.getTitle());
                     id++;
                     break;
@@ -42,18 +48,30 @@ public class TaskController {
                     taskManager.showAllTasks();
                     System.out.println("Введите ID удаляемой задачи");
                     int removeId = scanner.nextInt();
-                    taskManager.removeTask(removeId);
+                    try{
+                        taskManager.removeTask(removeId);
+                    }catch (TaskNotFoundException e){
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 3:
                     System.out.println("Введите ID");
                     int searchId = scanner.nextInt();
-                    taskManager.searchById(searchId);
+                    try{
+                        taskManager.searchById(searchId);
+                    }catch (TaskNotFoundException e){
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.println("Какую задачу Вы хотите завершить?");
                     taskManager.showAllTasks();
                     int completedId = scanner.nextInt();
-                    taskManager.complete(completedId);
+                    try{
+                        taskManager.complete(completedId);
+                    }catch (TaskNotFoundException e){
+                        System.err.println(e.getMessage());
+                    }
                     break;
                 case 5:
                     taskManager.showAllTasks();

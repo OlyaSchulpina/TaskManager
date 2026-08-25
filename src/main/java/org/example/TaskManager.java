@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.exception.InvalidTaskException;
+import org.example.exception.TaskNotFoundException;
 import org.example.model.Task;
 
 import java.util.HashMap;
@@ -19,20 +21,33 @@ public class TaskManager {
 
     public void addTask(Task task){
         int id = task.getId();
-        tasks.put(id,task);
+        if (task.getTitle().isEmpty()){
+            throw new InvalidTaskException("Заголовок не может быть пустым");
+        }else{
+            tasks.put(id,task);
+        }
     }
 
     public Task searchById(int id){
-        return tasks.get(id);
+        if (tasks.containsKey(id)){
+            return tasks.get(id);
+        }else{
+            throw new TaskNotFoundException("Задача не найдена");
+        }
     }
 
     public void removeTask(int id){
-        tasks.remove(id);
+        if (tasks.containsKey(id)){
+            tasks.remove(id);
+        }else{
+            throw new TaskNotFoundException("Задача не найдена");
+        }
     }
 
     public void showAllTasks(){
+        System.out.println("ID Задача");
         for (int id: tasks.keySet()){
-            System.out.println(tasks.get(id).getTitle());
+            System.out.println(id +"  "+ tasks.get(id).getTitle()+"  "+tasks.get(id).getDescription());
         }
     }
 
@@ -45,7 +60,11 @@ public class TaskManager {
         }
     }
     public void complete(int id){
-        Task task = tasks.get(id);
-        task.setCompleted(true);
+        if (tasks.containsKey(id)){
+            Task task = tasks.get(id);
+            task.setCompleted(true);
+        }else{
+            throw new TaskNotFoundException("Задача не найдена");
+        }
     }
 }
